@@ -67,3 +67,27 @@ def download(uri):
     with open(uri.split(sep)[-1], 'wb') as f:    
         f.write(content)    
         return uri 
+
+def get_images(page_uri):    
+    #    
+    # Recuperación de las URI de todas las imágenes de una página    
+    #    
+    html = wget(page_uri)    
+    if not html:    
+        print("Error: no se ha encontrado ninguna imagen ", sys.stderr) 
+       return None    
+    images_src_gen = get_images_src_from_html(html)    
+    images_uri_gen = get_uri_from_images_src(page_uri, images_src_gen)   
+    #    
+    # Recuperación de las imágenes    
+    #    
+    for image_uri in images_uri_gen:    
+        print('Descarga de %s' % image_uri)    
+        download(image_uri) 
+
+if __name__ == '__main__':    
+    print('--- Starting standard download ---')    
+    web_page_uri = 'http://www.formation-python.com/'    
+    print(timeit('get_images(web_page_uri)',    
+                 number=10,    
+                 setup="from __main__ import get_images, web_page_uri")) 
