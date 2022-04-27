@@ -22,8 +22,7 @@ def wget(uri):
         response = conn.getresponse()    
         # Análisis de la respuesta    
         if response.status != 200:    
-            # 200 = Ok, 3xx = redirection, 4xx = error client,  
-5xx = error servidor    
+            # 200 = Ok, 3xx = redirection, 4xx = error client, 5xx = error servidor    
             print(response.reason, file=stderr)    
             return    
         # Devuelve la respuesta si todo está OK.    
